@@ -15,9 +15,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          ref: main
 
       - name: Determine version tag
         id: version
@@ -26,21 +23,12 @@ jobs:
         env:
           GITHUB_EVENT_WORKFLOW_RUN_HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
 
-      - name: Generate release notes
-        uses: orhun/git-cliff-action@v4
-        with:
-          args: --verbose --latest --strip header
-        env:
-          OUTPUT: release-notes.md
-          GITHUB_REPO: ${{ github.repository }}
-
       - name: Create GitHub Release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh release create ${{ steps.version.outputs.tag }} \
-            --title "${{ steps.version.outputs.tag }}" \
-            --notes-file release-notes.md
+            --generate-notes
 
       - name: Tag latest
         uses: EndBug/latest-tag@v1
