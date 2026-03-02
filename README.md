@@ -19,3 +19,4 @@ Pushing a tag matching `v*.*.*` triggers a GitHub Actions workflow that creates 
 ### PR template
 
 A pull request template (`.github/pull_request_template.md`) reminds contributors to use the Conventional Commits format.
+
