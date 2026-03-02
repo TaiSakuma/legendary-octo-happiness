@@ -13,6 +13,10 @@ uv pip install -e .        # editable install
 uv build                   # build sdist/wheel
 ```
 
+## PR Titles
+
+PR titles must follow [Conventional Commits](https://www.conventionalcommits.org/) (e.g., `feat: add feature`). See [CONTRIBUTING.md](../CONTRIBUTING.md) for allowed types.
+
 ## Releases
 
 Releases are automated via GitHub Actions. Push a tag matching `v*.*.*` to trigger a GitHub Release with auto-generated notes.
