@@ -1,28 +1,46 @@
-name: Release a new version
+name: Release
 
 on:
-  push:
-    tags:
-      - "v*.*.*"
+  workflow_run:
+    workflows: ["Changelog"]
+    types: [completed]
 
 jobs:
-  deploy:
+  release:
     runs-on: ubuntu-latest
+    if: github.event.workflow_run.conclusion == 'success'
     permissions:
       contents: write
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
-      - name: Install gh CLI
-        uses: actions/setup-node@v6
+        uses: actions/checkout@v4
         with:
-          node-version: "18"
-      - name: Create Release
+          fetch-depth: 0
+          ref: main
+
+      - name: Determine version tag
+        id: version
+        run: |
+          echo "tag=v${GITHUB_EVENT_WORKFLOW_RUN_HEAD_BRANCH#u}" >> "$GITHUB_OUTPUT"
+        env:
+          GITHUB_EVENT_WORKFLOW_RUN_HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
+
+      - name: Generate release notes
+        uses: orhun/git-cliff-action@v4
+        with:
+          args: --verbose --latest --strip header
+        env:
+          OUTPUT: release-notes.md
+          GITHUB_REPO: ${{ github.repository }}
+
+      - name: Create GitHub Release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release create ${GITHUB_REF#refs/tags/} \
-            --generate-notes
+          gh release create ${{ steps.version.outputs.tag }} \
+            --title "${{ steps.version.outputs.tag }}" \
+            --notes-file release-notes.md
+
       - name: Tag latest
         uses: EndBug/latest-tag@v1
