@@ -1,0 +1,53 @@
+name: Changelog
+
+on:
+  push:
+    tags:
+      - "u*.*.*"
+
+jobs:
+  changelog:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
+
+      - name: Verify tag is on main
+        run: |
+          TAG_COMMIT=$(git rev-list -n 1 ${{ github.ref_name }})
+          if ! git merge-base --is-ancestor "$TAG_COMMIT" HEAD; then
+            echo "::error::Tag ${{ github.ref_name }} is not on main branch"
+            exit 1
+          fi
+
+      - name: Determine version tag
+        id: version
+        run: |
+          echo "tag=v${GITHUB_REF_NAME#u}" >> "$GITHUB_OUTPUT"
+
+      - name: Generate changelog
+        uses: orhun/git-cliff-action@v4
+        with:
+          args: --verbose --tag ${{ steps.version.outputs.tag }}
+        env:
+          OUTPUT: CHANGELOG.md
+          GITHUB_REPO: ${{ github.repository }}
+
+      - name: Commit, tag, and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add CHANGELOG.md
+          if git diff --cached --quiet; then
+            echo "No changes to CHANGELOG.md"
+          else
+            git commit -m "docs: update CHANGELOG.md for ${{ steps.version.outputs.tag }}"
+            git tag ${{ steps.version.outputs.tag }}
+            git push origin main --tags
+          fi

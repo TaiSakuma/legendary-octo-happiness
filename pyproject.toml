@@ -1,6 +1,6 @@
 [project]
 name = "legendary-octo-happiness"
-version = "0.1.0"
+dynamic = ["version"]
 description = "Add your description here"
 readme = "README.md"
 authors = [{ name = "Tai Sakuma" }]
@@ -10,3 +10,9 @@ dependencies = []
 [build-system]
 requires = ["hatchling", "hatch-regex-commit"]
 build-backend = "hatchling.build"
+
+[tool.hatch.version]
+source = "regex_commit"
+path = "src/legendary_octo_happiness/__about__.py"
+tag_name = "u{new_version}"
+tag_sign = false
