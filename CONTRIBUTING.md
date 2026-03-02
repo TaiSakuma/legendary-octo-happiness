@@ -35,3 +35,27 @@ type: description
 ### Individual Commits
 
 Individual commit messages within a PR are free-form. Only the PR title is enforced.
+
+## Releasing
+
+Releases use a two-tag flow. The `u` tag triggers changelog generation, which in turn creates the `v` tag and GitHub Release.
+
+### Steps
+
+1. **Bump the version:**
+
+   ```bash
+   hatch version <rule>
+   ```
+
+   Where `<rule>` is `patch`, `minor`, or `major`. This updates `src/legendary_octo_happiness/__about__.py`, creates a commit, and tags it `u<version>`.
+
+2. **Push the commit and tag:**
+
+   ```bash
+   git push origin main --tags
+   ```
+
+3. **Wait for CI:**
+   - The **Changelog** workflow generates `CHANGELOG.md`, commits it to `main`, and creates the `v` tag.
+   - The **Release** workflow then creates a GitHub Release with categorized notes.
