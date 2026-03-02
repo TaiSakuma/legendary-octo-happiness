@@ -16,6 +16,10 @@ The repository is configured to only allow **squash merges**. The PR title becom
 
 Pushing a tag matching `v*.*.*` triggers a GitHub Actions workflow that creates a GitHub Release with auto-generated release notes.
 
+### Categorized release notes
+
+PRs are auto-labeled based on their Conventional Commits title prefix (e.g., `feat:` → `feature` label) using [`bcoe/conventional-release-labels`](https://github.com/bcoe/conventional-release-labels). Release notes are then grouped into categories (Features, Bug Fixes, etc.) via `.github/release.yml`. Dependabot PRs are excluded from release notes.
+
 ### PR template
 
 A pull request template (`.github/pull_request_template.md`) reminds contributors to use the Conventional Commits format.
