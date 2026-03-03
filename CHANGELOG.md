@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.2] - 2026-03-03
+
+### Documentation
+
+- Rewrite README as a reference guide ([#8](https://github.com//pull/8)) ([ac2e5b9](https://github.com/TaiSakuma/legendary-octo-happiness/commit/ac2e5b99230f82cb49e2aa241270295132570bea))
 ## [0.2.1] - 2026-03-02
 
 ### Bug Fixes
