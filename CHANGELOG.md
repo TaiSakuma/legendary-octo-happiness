@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.3] - 2026-03-03
+
+### Bug Fixes
+
+- Use git-cliff GitHub integration for PR links ([#9](https://github.com/TaiSakuma/legendary-octo-happiness/pull/9)) ([83ead1e](https://github.com/TaiSakuma/legendary-octo-happiness/commit/83ead1ef9362c5e874d45d7eb2341f916f534205))
 ## [0.2.2] - 2026-03-03
 
 ### Documentation
