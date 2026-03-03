@@ -23,4 +23,4 @@ Releases use a two-tag flow:
 
 1. Bump version with `hatch version <rule>`, commit, tag `u<version>`, push.
 2. The Changelog workflow (triggered by the `u` tag) generates `CHANGELOG.md`, commits it, creates the `v` tag, and pushes.
-3. The Release workflow (triggered via `workflow_run` after Changelog) creates a GitHub Release with git-cliff release notes.
+3. The Release workflow (triggered via `workflow_run` after Changelog) creates a GitHub Release with GitHub auto-generated notes.
