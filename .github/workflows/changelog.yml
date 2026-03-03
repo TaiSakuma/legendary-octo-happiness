@@ -1,4 +1,13 @@
-name: Changelog
+name: Generate changelog
+
+# Generate CHANGELOG.md with git-cliff (https://git-cliff.org/) when a
+# version-bump tag (u*.*.*) is pushed, then commit the result, create the
+# corresponding v-prefixed tag, and push both to main.
+#
+# This is the first half of the two-tag release flow:
+#   1. hatch version <rule> → commit → push tag u<version>
+#   2. (this workflow) generates CHANGELOG.md → commits → pushes tag v<version>
+#   3. The "Release a new version" workflow creates a GitHub Release
 
 on:
   push:
@@ -18,6 +27,7 @@ jobs:
           fetch-depth: 0
           ref: main
 
+      # Guard against accidentally tagging a commit on a feature branch.
       - name: Verify tag is on main
         run: |
           TAG_COMMIT=$(git rev-list -n 1 ${{ github.ref_name }})
@@ -26,6 +36,7 @@ jobs:
             exit 1
           fi
 
+      # Transform the trigger tag (u1.2.3) into the release tag (v1.2.3).
       - name: Determine version tag
         id: version
         run: |
@@ -44,6 +55,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add CHANGELOG.md
+          # Skip the commit when the changelog is unchanged (e.g., re-running
+          # the workflow for an already-processed tag).
           if git diff --cached --quiet; then
             echo "No changes to CHANGELOG.md"
           else

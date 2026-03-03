@@ -1,4 +1,8 @@
-name: Conventional Labels
+name: Label PR by convention
+
+# Automatically label PRs based on the Conventional Commits type in the title
+# (https://www.conventionalcommits.org/).
+# e.g., a PR titled "feat: ..." gets the "feature" label.
 
 on:
   pull_request_target:
