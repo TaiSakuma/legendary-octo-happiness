@@ -159,6 +159,10 @@ Tags pushed by `GITHUB_TOKEN` don't fire `on: push: tags` events. **Solution:** 
 
 You can't use a `branches` filter with `on: push: tags` — GitHub doesn't provide branch context for tag events. **Solution:** Add an explicit verification step in the workflow that checks whether the tag's commit is an ancestor of `main`.
 
+### `commit_preprocessors` don't support env var expansion
+
+git-cliff's `commit_preprocessors` use `${N}` syntax for regex capture groups only. Environment variables like `${GITHUB_REPO}` in a `replace` field resolve to empty strings — they are not expanded. **Solution:** Use git-cliff's GitHub integration instead: pass `GITHUB_TOKEN` so git-cliff can fetch PR metadata via the API, then render PR links in the body template using `commit.remote.pr_number` and the `remote.github.owner`/`remote.github.repo` Tera variables.
+
 ### `hatch-regex-commit` needs a file path
 
 The `path` in `[tool.hatch.version]` must point to a Python file like `__about__.py`, not `pyproject.toml`. The version field in `[project]` must be `dynamic`.
