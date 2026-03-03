@@ -1,8 +1,8 @@
-name: Release
+name: Release a new version
 
 on:
   workflow_run:
-    workflows: ["Changelog"]
+    workflows: ["Generate changelog"]
     types: [completed]
 
 jobs:

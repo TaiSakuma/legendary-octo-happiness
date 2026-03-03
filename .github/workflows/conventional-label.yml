@@ -1,4 +1,4 @@
-name: Conventional Labels
+name: Label PR by convention
 
 on:
   pull_request_target:
