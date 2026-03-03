@@ -1,5 +1,9 @@
 name: Validate PR title
 
+# Validate that PR titles follow Conventional Commits
+# (https://www.conventionalcommits.org/).
+# Runs on every PR open/edit/sync so the merge commit message stays consistent.
+
 on:
   pull_request_target:
     types:
@@ -17,6 +21,7 @@ jobs:
     steps:
       - uses: amannn/action-semantic-pull-request@v6
         with:
+          # Regex `.*` rejects all scopes — we don't use scoped prefixes.
           disallowScopes: |
             .*
           types: |

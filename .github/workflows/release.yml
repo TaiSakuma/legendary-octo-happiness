@@ -1,5 +1,10 @@
 name: Release a new version
 
+# Create a GitHub Release after the "Generate changelog" workflow succeeds,
+# then update the `latest` tag to point at the new release commit.
+#
+# This is the second half of the two-tag release flow (see changelog.yml).
+
 on:
   workflow_run:
     workflows: ["Generate changelog"]
@@ -16,6 +21,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # workflow_run events don't set GITHUB_REF to the tag; the trigger tag
+      # is available via head_branch instead. Transform u1.2.3 → v1.2.3.
       - name: Determine version tag
         id: version
         run: |
@@ -30,5 +37,7 @@ jobs:
           gh release create ${{ steps.version.outputs.tag }} \
             --generate-notes
 
+      # Maintain a rolling `latest` tag so users can always reference the
+      # most recent release (e.g., in install instructions).
       - name: Tag latest
         uses: EndBug/latest-tag@v1
