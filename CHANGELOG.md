@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.4] - 2026-03-03
+
+### Documentation
+
+- Fix release notes description in CLAUDE.md ([#10](https://github.com/TaiSakuma/legendary-octo-happiness/pull/10)) ([c1e4214](https://github.com/TaiSakuma/legendary-octo-happiness/commit/c1e42148b8f3f0f01d0afa546d26719912c6d016))
+- Add comments to workflow files ([#11](https://github.com/TaiSakuma/legendary-octo-happiness/pull/11)) ([5406d8e](https://github.com/TaiSakuma/legendary-octo-happiness/commit/5406d8e92bfecb4e2c445cc62183561d6df16e56))
+
+### Build & CI
+
+- Ignore uv.lock ([#12](https://github.com/TaiSakuma/legendary-octo-happiness/pull/12)) ([b733611](https://github.com/TaiSakuma/legendary-octo-happiness/commit/b7336114f4f8af9159a5ff415e03b3492c194b18))
 ## [0.2.3] - 2026-03-03
 
 ### Bug Fixes
