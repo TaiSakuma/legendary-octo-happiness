@@ -17,6 +17,10 @@ uv build                   # build sdist/wheel
 
 PR titles must follow [Conventional Commits](https://www.conventionalcommits.org/) (e.g., `feat: add feature`). See [CONTRIBUTING.md](../CONTRIBUTING.md) for allowed types.
 
+## README
+
+Use `/review-readme` to audit and update. Key rules: links must resolve, config table must match actual files, pitfalls must stay current.
+
 ## Releases
 
 Releases use a two-tag flow:
