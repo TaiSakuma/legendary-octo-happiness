@@ -122,26 +122,66 @@ See: [`pyproject.toml`](pyproject.toml)
 
 ### 5. Changelog generation
 
-Add a git-cliff config and a GitHub Actions workflow that triggers on `u` tags. The workflow:
+Add a changelog workflow that triggers on `u` tags. This repo uses a composite action ([`changelog-commit`](.github/actions/changelog-commit/action.yml)) that bundles a [git-cliff config](.github/actions/changelog-commit/cliff.toml) and all the logic needed to:
 
-1. Checks out `main` with full history
-2. Verifies the tag is on `main`
-3. Runs git-cliff to generate `CHANGELOG.md`
-4. Commits the changelog, creates the `v` tag, and pushes both
+1. Check out `main` with full history
+2. Verify the tag is on `main`
+3. Run git-cliff to generate `CHANGELOG.md`
+4. Commit the changelog, create the `v` tag, and push both
 
-See: [`cliff.toml`](cliff.toml), [`.github/workflows/changelog.yml`](.github/workflows/changelog.yml)
+See: [`.github/actions/changelog-commit/action.yml`](.github/actions/changelog-commit/action.yml), [`.github/workflows/changelog.yml`](.github/workflows/changelog.yml)
 
 ### 6. Automated releases
 
-Add a release workflow that triggers via `workflow_run` after the Changelog workflow completes.
+Add a release workflow that triggers via `workflow_run` after the Changelog workflow completes. This repo uses a composite action ([`checkout-version-tag`](.github/actions/checkout-version-tag/action.yml)) to derive the `v` tag from the `u` tag that triggered the Changelog workflow.
 
 This sidesteps the `GITHUB_TOKEN` limitation: instead of triggering on `push: tags: v*` (which won't fire for tags pushed by `GITHUB_TOKEN`), the workflow listens for the Changelog workflow's completion.
 
-See: [`.github/workflows/release.yml`](.github/workflows/release.yml)
+See: [`.github/actions/checkout-version-tag/action.yml`](.github/actions/checkout-version-tag/action.yml), [`.github/workflows/release.yml`](.github/workflows/release.yml)
 
 ### 7. Claude Code
 
 Add a [`.claude/CLAUDE.md`](.claude/CLAUDE.md) file with project guidance so [Claude Code](https://claude.ai/code) understands the build commands, PR conventions, and release flow.
+
+## Composite actions
+
+The changelog and release workflows delegate to two reusable composite actions under [`.github/actions/`](.github/actions/).
+
+### `changelog-commit`
+
+Generates a changelog with git-cliff, commits it, creates a release tag, and pushes both to the target branch.
+
+| Input | Default | Description |
+| ----- | ------- | ----------- |
+| `trigger-tag` | *(required)* | Tag that triggered the workflow (e.g., `u1.2.3`) |
+| `trigger-tag-prefix` | `u` | Prefix to strip from the trigger tag |
+| `release-tag-prefix` | `v` | Prefix for the release tag |
+| `branch` | `main` | Branch to verify against, commit to, and push |
+| `changelog-path` | `CHANGELOG.md` | Path to the changelog file |
+| `commit-parsers` | *(built-in)* | TOML array of commit parsers to override the defaults |
+| `body` | *(built-in)* | Tera template for the changelog body |
+
+| Output | Description |
+| ------ | ----------- |
+| `release-tag` | Computed release tag (e.g., `v1.2.3`) |
+| `version` | Bare version number (e.g., `1.2.3`) |
+| `changed` | `'true'` or `'false'` — whether the changelog was updated |
+
+### `checkout-version-tag`
+
+Derives a release tag from a trigger tag, then checks out that ref.
+
+| Input | Default | Description |
+| ----- | ------- | ----------- |
+| `trigger-tag` | *(required)* | Tag/branch name to derive from (e.g., `u1.2.3`) |
+| `trigger-tag-prefix` | `u` | Prefix to strip from the trigger tag |
+| `release-tag-prefix` | `v` | Prefix for the release tag |
+| `fetch-depth` | `1` | Number of commits to fetch |
+
+| Output | Description |
+| ------ | ----------- |
+| `release-tag` | Computed release tag (e.g., `v1.2.3`) |
+| `version` | Bare version number (e.g., `1.2.3`) |
 
 ## Pitfalls
 
@@ -172,12 +212,14 @@ The `path` in `[tool.hatch.version]` must point to a Python file like `__about__
 | File | Purpose |
 | ---- | ------- |
 | [`pyproject.toml`](pyproject.toml) | Build config, version management with `hatch-regex-commit` |
-| [`cliff.toml`](cliff.toml) | git-cliff changelog format and commit parsing rules |
 | [`src/legendary_octo_happiness/__about__.py`](src/legendary_octo_happiness/__about__.py) | Single source of truth for package version |
 | [`.github/workflows/pr-title.yml`](.github/workflows/pr-title.yml) | Enforce Conventional Commits on PR titles |
 | [`.github/workflows/conventional-label.yml`](.github/workflows/conventional-label.yml) | Auto-label PRs based on commit type |
 | [`.github/workflows/changelog.yml`](.github/workflows/changelog.yml) | Generate CHANGELOG.md and create `v` tag on `u` tag push |
 | [`.github/workflows/release.yml`](.github/workflows/release.yml) | Create GitHub Release after Changelog workflow completes |
+| [`.github/actions/changelog-commit/action.yml`](.github/actions/changelog-commit/action.yml) | Composite action: generate changelog, commit, tag, push |
+| [`.github/actions/changelog-commit/cliff.toml`](.github/actions/changelog-commit/cliff.toml) | Default git-cliff changelog format and commit parsing rules |
+| [`.github/actions/checkout-version-tag/action.yml`](.github/actions/checkout-version-tag/action.yml) | Composite action: derive release tag and checkout |
 | [`.github/release.yml`](.github/release.yml) | Categorize auto-generated release notes by label |
 | [`.github/pull_request_template.md`](.github/pull_request_template.md) | PR checklist reminding contributors of title convention |
 | [`.claude/CLAUDE.md`](.claude/CLAUDE.md) | Project guidance for Claude Code |
