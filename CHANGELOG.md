@@ -14,11 +14,11 @@ All notable changes to this project will be documented in this file.
 
 ### Bug Fixes
 
-- Add checkout step before local composite actions
+- Add checkout step before local composite actions ([#19](https://github.com/TaiSakuma/legendary-octo-happiness/pull/19))
 
 ### Refactoring
 
-- Extract composite actions from workflows
+- Extract composite actions from workflows ([#18](https://github.com/TaiSakuma/legendary-octo-happiness/pull/18))
 
 
 ## [0.2.6] - 2026-03-04
