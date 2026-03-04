@@ -6,7 +6,7 @@ This project uses [Conventional Commits](https://www.conventionalcommits.org/) f
 
 ### Format
 
-```
+```text
 type: description
 ```
 
