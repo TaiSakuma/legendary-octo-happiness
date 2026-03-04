@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 
 
+## [0.2.6] - 2026-03-04
+
+### Bug Fixes
+
+- Restrict changelog link parser to title-line PR references ([#17](https://github.com/TaiSakuma/legendary-octo-happiness/pull/17))
+
+
 ## [0.2.5] - 2026-03-04
 
 ### Bug Fixes
