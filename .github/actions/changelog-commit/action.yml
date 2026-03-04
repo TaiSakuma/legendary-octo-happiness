@@ -86,29 +86,7 @@ runs:
         cp "${{ github.action_path }}/cliff.toml" "$CONFIG"
 
         if [[ -n "$INPUT_BODY" || -n "$INPUT_COMMIT_PARSERS" ]]; then
-          python3 -c "
-        import os, re, sys
-
-        config_path = sys.argv[1]
-        body = os.environ.get('INPUT_BODY', '')
-        parsers = os.environ.get('INPUT_COMMIT_PARSERS', '')
-
-        with open(config_path) as f:
-            content = f.read()
-
-        if body:
-            m = re.search(r'body = \"\"\".*?\"\"\"', content, flags=re.DOTALL)
-            if m:
-                content = content[:m.start()] + 'body = \"\"\"\n' + body + '\n\"\"\"' + content[m.end():]
-
-        if parsers:
-            m = re.search(r'commit_parsers = \[.*?\]', content, flags=re.DOTALL)
-            if m:
-                content = content[:m.start()] + 'commit_parsers = ' + parsers + content[m.end():]
-
-        with open(config_path, 'w') as f:
-            f.write(content)
-        " "$CONFIG"
+          node "${{ github.action_path }}/dist/patch-config.cjs" "$CONFIG"
         fi
 
         echo "path=$CONFIG" >> "$GITHUB_OUTPUT"
