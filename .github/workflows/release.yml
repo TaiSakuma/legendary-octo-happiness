@@ -20,6 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
         with:
+          ref: ${{ github.event.workflow_run.head_sha }}
           sparse-checkout: .github/actions/checkout-version-tag
 
       - name: Checkout release tag
