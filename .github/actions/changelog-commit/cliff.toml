@@ -1,3 +1,13 @@
+# Default git-cliff configuration for the changelog-commit composite action.
+#
+# This file is not standalone — the action supplements it with CLI flags:
+#   --tag-pattern  (derived from the release-tag-prefix input)
+#   --github-repo  (set to $GITHUB_REPOSITORY; requires GITHUB_TOKEN)
+#
+# The action copies this file to a temp path and, when the body or
+# commit-parsers inputs are provided, patches the copy before passing
+# it to git-cliff via --config.
+
 [changelog]
 header = """
 # Changelog\n
@@ -29,10 +39,6 @@ postprocessors = [
 conventional_commits = true
 filter_unconventional = true
 split_commits = false
-tag_pattern = "v[0-9].*"
-link_parsers = [
-  { pattern = "^[^\\n]*\\(#(\\d+)\\)[ \\t]*(?:\\n|$)", href = "https://github.com/TaiSakuma/legendary-octo-happiness/pull/$1", text = "#$1" },
-]
 commit_parsers = [
   { message = "^docs: update CHANGELOG", skip = true },
   { message = "^feat", group = "<!-- 0 -->Features" },
