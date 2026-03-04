@@ -16,3 +16,4 @@ source = "regex_commit"
 path = "src/legendary_octo_happiness/__about__.py"
 tag_name = "u{new_version}"
 tag_sign = false
+check_dirty = false

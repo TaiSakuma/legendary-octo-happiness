@@ -19,7 +19,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       # workflow_run events don't set GITHUB_REF to the tag; the trigger tag
       # is available via head_branch instead. Transform u1.2.3 → v1.2.3.
