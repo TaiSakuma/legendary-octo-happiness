@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 
 
+## [0.3.1] - 2026-03-04
+
+### Bug Fixes
+
+- Add checkout step before local composite actions
+
+### Refactoring
+
+- Extract composite actions from workflows
+
+
 ## [0.2.6] - 2026-03-04
 
 ### Bug Fixes
