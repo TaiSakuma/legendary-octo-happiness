@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 
 
+## [0.2.5] - 2026-03-04
+
+### Bug Fixes
+
+- Check out v-tag so `latest` points to the correct commit ([#16](https://github.com/TaiSakuma/legendary-octo-happiness/pull/16)) ([#15](https://github.com/TaiSakuma/legendary-octo-happiness/pull/15))
+
+### Build & CI
+
+- Port release workflow improvements from hypothesis-awkward ([#13](https://github.com/TaiSakuma/legendary-octo-happiness/pull/13))
+
+
 ## [0.2.4] - 2026-03-03
 
 ### Documentation
