@@ -1,0 +1,49 @@
+name: Checkout version tag
+description: >-
+  Derive a release tag from a trigger tag, then checkout that ref.
+
+inputs:
+  trigger-tag:
+    description: Tag/branch name to derive from (e.g., u1.2.3)
+    required: true
+  trigger-tag-prefix:
+    description: Prefix to strip from the trigger tag
+    required: false
+    default: u
+  release-tag-prefix:
+    description: Prefix for the release tag
+    required: false
+    default: v
+  fetch-depth:
+    description: Number of commits to fetch
+    required: false
+    default: "1"
+
+outputs:
+  release-tag:
+    description: Computed release tag (e.g., v1.2.3)
+    value: ${{ steps.derive.outputs.release-tag }}
+  version:
+    description: Bare version number (e.g., 1.2.3)
+    value: ${{ steps.derive.outputs.version }}
+
+runs:
+  using: composite
+  steps:
+    - name: Derive release tag
+      id: derive
+      shell: bash
+      run: |
+        VERSION="${TRIGGER_TAG#"$PREFIX"}"
+        echo "release-tag=${RELEASE_PREFIX}${VERSION}" >> "$GITHUB_OUTPUT"
+        echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+      env:
+        TRIGGER_TAG: ${{ inputs.trigger-tag }}
+        PREFIX: ${{ inputs.trigger-tag-prefix }}
+        RELEASE_PREFIX: ${{ inputs.release-tag-prefix }}
+
+    - name: Checkout
+      uses: actions/checkout@v6
+      with:
+        ref: ${{ steps.derive.outputs.release-tag }}
+        fetch-depth: ${{ inputs.fetch-depth }}
