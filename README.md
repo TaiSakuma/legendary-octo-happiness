@@ -177,6 +177,7 @@ Derives a release tag from a trigger tag, then checks out that ref.
 | `trigger-tag-prefix` | `u` | Prefix to strip from the trigger tag |
 | `release-tag-prefix` | `v` | Prefix for the release tag |
 | `fetch-depth` | `1` | Number of commits to fetch |
+| `skip-checkout` | `false` | Skip the checkout step (use if already checked out) |
 
 | Output | Description |
 | ------ | ----------- |
@@ -219,6 +220,7 @@ The `path` in `[tool.hatch.version]` must point to a Python file like `__about__
 | [`.github/workflows/release.yml`](.github/workflows/release.yml) | Create GitHub Release after Changelog workflow completes |
 | [`.github/release.yml`](.github/release.yml) | Categorize auto-generated release notes by label |
 | [`.github/pull_request_template.md`](.github/pull_request_template.md) | PR checklist reminding contributors of title convention |
+| [`.github/dependabot.yml`](.github/dependabot.yml) | Dependabot config for automated GitHub Actions updates |
 | [`.claude/CLAUDE.md`](.claude/CLAUDE.md) | Project guidance for Claude Code |
 | [`CONTRIBUTING.md`](CONTRIBUTING.md) | Allowed commit types, release instructions |
 
