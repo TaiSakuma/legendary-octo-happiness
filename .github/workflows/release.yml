@@ -18,14 +18,9 @@ jobs:
       contents: write
 
     steps:
-      - uses: actions/checkout@v6
-        with:
-          ref: ${{ github.event.workflow_run.head_sha }}
-          sparse-checkout: .github/actions/checkout-version-tag
-
       - name: Checkout release tag
         id: version
-        uses: ./.github/actions/checkout-version-tag
+        uses: TaiSakuma/checkout-version-tag@v1
         with:
           trigger-tag: ${{ github.event.workflow_run.head_branch }}
 

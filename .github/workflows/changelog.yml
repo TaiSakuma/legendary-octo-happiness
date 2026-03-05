@@ -21,10 +21,6 @@ jobs:
       contents: write
 
     steps:
-      - uses: actions/checkout@v6
-        with:
-          sparse-checkout: .github/actions/changelog-commit
-
-      - uses: ./.github/actions/changelog-commit
+      - uses: TaiSakuma/changelog-commit@v1
         with:
           trigger-tag: ${{ github.ref_name }}
