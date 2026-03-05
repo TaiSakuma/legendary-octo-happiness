@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 
 
+## [0.4.0] - 2026-03-05
+
+### Documentation
+
+- Add missing PR links to 0.3.1 changelog ([#21](https://github.com/TaiSakuma/legendary-octo-happiness/pull/21))
+
+### Refactoring
+
+- Replace local composite actions with marketplace versions ([#22](https://github.com/TaiSakuma/legendary-octo-happiness/pull/22))
+
+
 ## [0.3.2] - 2026-03-04
 
 ### Bug Fixes
