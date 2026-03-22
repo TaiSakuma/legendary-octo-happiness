@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 
 
+## [0.4.1] - 2026-03-22
+
+### Documentation
+
+- Rewrite README and add MIT license ([#24](https://github.com/TaiSakuma/legendary-octo-happiness/pull/24))
+
+### Build & CI
+
+- Add Dependabot for GitHub Actions ([#23](https://github.com/TaiSakuma/legendary-octo-happiness/pull/23))
+
+
 ## [0.4.0] - 2026-03-05
 
 ### Documentation
