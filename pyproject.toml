@@ -5,6 +5,7 @@ description = "Add your description here"
 readme = "README.md"
 authors = [{ name = "Tai Sakuma" }]
 requires-python = ">=3.12"
+license = "MIT"
 dependencies = []
 
 [build-system]
