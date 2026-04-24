@@ -31,6 +31,7 @@ type: description
 - `feat: add user authentication`
 - `fix: handle empty input`
 - `docs: update installation instructions`
+- `feat!: drop support for Python 3.11` (breaking change)
 
 ### Individual Commits
 
