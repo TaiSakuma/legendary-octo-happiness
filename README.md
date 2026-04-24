@@ -20,6 +20,7 @@ Conventional Commits.
 ## Features
 
 - PR title prefixes (e.g., `feat:`, `fix:`) enforced with [Conventional Commits]
+- Breaking changes marked with `!` (e.g., `feat!:`)
 - PR labels assigned automatically based on the prefix
 - GitHub Releases triggered by version tags
 - Release notes and `CHANGELOG.md` generated from PR titles
