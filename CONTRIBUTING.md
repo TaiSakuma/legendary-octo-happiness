@@ -12,25 +12,28 @@ type: description
 
 ### Allowed Types
 
-| Type | Purpose |
-|------|---------|
-| `feat` | A new feature |
-| `fix` | A bug fix |
-| `docs` | Documentation only |
-| `style` | Code style (formatting, semicolons, etc.) |
+| Type       | Purpose                                                 |
+| ---------- | ------------------------------------------------------- |
+| `feat`     | A new feature                                           |
+| `fix`      | A bug fix                                               |
+| `docs`     | Documentation only                                      |
+| `style`    | Code style (formatting, semicolons, etc.)               |
 | `refactor` | Code change that neither fixes a bug nor adds a feature |
-| `perf` | Performance improvement |
-| `test` | Adding or updating tests |
-| `build` | Build system or external dependencies |
-| `ci` | CI configuration |
-| `chore` | Other changes that don't modify src or test files |
-| `revert` | Reverts a previous commit |
+| `perf`     | Performance improvement                                 |
+| `test`     | Adding or updating tests                                |
+| `build`    | Build system or external dependencies                   |
+| `ci`       | CI configuration                                        |
+| `chore`    | Other changes that don't modify src or test files       |
+| `revert`   | Reverts a previous commit                               |
+
+Append `!` to indicate breaking changes (e.g., `feat!: description`).
 
 ### Examples
 
 - `feat: add user authentication`
 - `fix: handle empty input`
 - `docs: update installation instructions`
+- `feat!: remove get_user()`
 
 ### Individual Commits
 
