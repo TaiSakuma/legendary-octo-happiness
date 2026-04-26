@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 
 
+## [0.5.1] - 2026-04-26
+
+### Documentation
+
+- Document `!` breaking-change marker ([#28](https://github.com/TaiSakuma/legendary-octo-happiness/pull/28))
+
+
 ## [0.5.0] - 2026-04-24
 
 ### Build & CI
