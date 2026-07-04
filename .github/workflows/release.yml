@@ -20,7 +20,7 @@ jobs:
     steps:
       - name: Checkout release tag
         id: version
-        uses: TaiSakuma/checkout-version-tag@v1
+        uses: TaiSakuma/checkout-version-tag@920911b2aaaea227efc3a0e50c201aa03ccafa0c # v1.2.0
         with:
           trigger-tag: ${{ github.event.workflow_run.head_branch }}
 
@@ -34,4 +34,4 @@ jobs:
       # Maintain a rolling `latest` tag so users can always reference the
       # most recent release (e.g., in install instructions).
       - name: Tag latest
-        uses: EndBug/latest-tag@v1
+        uses: EndBug/latest-tag@8fcae8848c1e23fd8212258f69a9619bc62cad67 # v1.6.3
