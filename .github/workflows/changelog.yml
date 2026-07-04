@@ -21,6 +21,6 @@ jobs:
       contents: write
 
     steps:
-      - uses: TaiSakuma/changelog-commit@v1
+      - uses: TaiSakuma/changelog-commit@b3fbc77d560296e267f3dd34932111a5ef765703 # v1.1.2
         with:
           trigger-tag: ${{ github.ref_name }}
