@@ -1,12 +1,16 @@
 [project]
 name = "legendary-octo-happiness"
 dynamic = ["version"]
-description = "Add your description here"
+description = "Reference implementation of automated changelog and release workflows using Conventional Commits"
 readme = "README.md"
 authors = [{ name = "Tai Sakuma" }]
 requires-python = ">=3.12"
 license = "MIT"
 dependencies = []
+
+[project.urls]
+Repository = "https://github.com/TaiSakuma/legendary-octo-happiness"
+Changelog = "https://github.com/TaiSakuma/legendary-octo-happiness/blob/main/CHANGELOG.md"
 
 [build-system]
 requires = ["hatchling", "hatch-regex-commit"]
