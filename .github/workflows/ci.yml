@@ -1,0 +1,33 @@
+name: CI
+
+# Verify the package on every PR and push to main: build the sdist and
+# wheel, import the package from the built wheel in an isolated
+# environment, and type-check the source with mypy.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: astral-sh/setup-uv@fac544c07dec837d0ccb6301d7b5580bf5edae39 # v8.2.0
+
+      - name: Build sdist and wheel
+        run: uv build
+
+      # Install the built wheel into an isolated environment on the
+      # oldest supported Python (requires-python floor) and import it.
+      - name: Import package from built wheel
+        run: |
+          uv run --no-project --python 3.12 --with dist/*.whl \
+            python -c "import legendary_octo_happiness; print(legendary_octo_happiness.hello())"
+
+      - name: Type-check with mypy
+        run: uvx mypy --strict src

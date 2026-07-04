@@ -1,12 +1,15 @@
 # legendary-octo-happiness
 
 [![GitHub Release][release-badge]][release-url]
+[![CI][ci-badge]][ci-url]
 [![Changelog][changelog-badge]][changelog-url]
 [![Release][release-wf-badge]][release-wf-url]
 [![License: MIT][license-badge]][license-url]
 
 [release-badge]: https://img.shields.io/github/v/release/TaiSakuma/legendary-octo-happiness
 [release-url]: https://github.com/TaiSakuma/legendary-octo-happiness/releases/latest
+[ci-badge]: https://github.com/TaiSakuma/legendary-octo-happiness/actions/workflows/ci.yml/badge.svg
+[ci-url]: https://github.com/TaiSakuma/legendary-octo-happiness/actions/workflows/ci.yml
 [changelog-badge]: https://github.com/TaiSakuma/legendary-octo-happiness/actions/workflows/changelog.yml/badge.svg
 [changelog-url]: https://github.com/TaiSakuma/legendary-octo-happiness/actions/workflows/changelog.yml
 [release-wf-badge]: https://github.com/TaiSakuma/legendary-octo-happiness/actions/workflows/release.yml/badge.svg
@@ -44,11 +47,13 @@ The following workflows run on GitHub Actions:
 
 | Workflow                   | Trigger                      | Purpose                          |
 | -------------------------- | ---------------------------- | -------------------------------- |
+| [`ci.yml`]                 | PR, push to `main`           | Build and type-check the package |
 | [`pr-title.yml`]           | PR opened/edited             | Validate PR title                |
 | [`conventional-label.yml`] | PR opened/edited             | Label PR by convention           |
 | [`changelog.yml`]          | `u*` tag pushed              | Generate `CHANGELOG.md`, `v` tag |
 | [`release.yml`]            | Changelog workflow completed | Create GitHub Release            |
 
+[`ci.yml`]: .github/workflows/ci.yml
 [`pr-title.yml`]: .github/workflows/pr-title.yml
 [`conventional-label.yml`]: .github/workflows/conventional-label.yml
 [`changelog.yml`]: .github/workflows/changelog.yml
