@@ -48,7 +48,7 @@ The following workflows run on GitHub Actions:
 | Workflow                   | Trigger                      | Purpose                          |
 | -------------------------- | ---------------------------- | -------------------------------- |
 | [`ci.yml`]                 | PR, push to `main`           | Build and type-check the package |
-| [`pr-title.yml`]           | PR opened/edited             | Validate PR title                |
+| [`pr-title.yml`]           | PR opened/edited/synced      | Validate PR title                |
 | [`conventional-label.yml`] | PR opened/edited             | Label PR by convention           |
 | [`changelog.yml`]          | `u*` tag pushed              | Generate `CHANGELOG.md`, `v` tag |
 | [`release.yml`]            | Changelog workflow completed | Create GitHub Release            |
