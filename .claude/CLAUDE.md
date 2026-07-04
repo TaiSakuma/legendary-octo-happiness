@@ -19,7 +19,7 @@ PR titles must follow [Conventional Commits](https://www.conventionalcommits.org
 
 ## README
 
-Use `/review-readme` to audit and update. Key rules: links must resolve, config table must match actual files, pitfalls must stay current.
+Use `/review-readme` to audit and update. Key rules: links must resolve, and the workflows table must match the actual workflow files and their triggers.
 
 ## Releases
 

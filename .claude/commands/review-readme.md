@@ -6,16 +6,16 @@ Review and update README.md for this repository.
 
 2. **Link audit** — Extract every `[text](path)` link that points to a local file. Verify each target exists using Glob. Report any broken links.
 
-3. **Configuration Reference table** — Compare the table rows against actual files in the repo. Flag missing entries, stale entries, or wrong paths.
+3. **Workflows table** — Compare each row of the "GitHub Actions workflows" table against the actual files in `.github/workflows/`. Verify the file exists, the trigger column matches the workflow's `on:` block, and the purpose column matches what the workflow does. Flag workflows that exist but are missing from the table.
 
-4. **Persona review** — Read through the README from each of these adopter perspectives and identify gaps:
+4. **Release process** — Verify the numbered steps in the "Release process" section match the actual behavior of `changelog.yml` and `release.yml`: the trigger tag pattern, the generated `v` tag, and the GitHub Release creation.
 
-   - **Python dev, knows CI basics** — Does the setup walkthrough (steps 1–7) answer their questions? Are the instructions complete and in the right order?
-   - **Experienced CI user** — Is the two-tag flow clearly explained? Are the composite actions documented well enough to use in their own workflows?
-   - **Existing user, customizing** — Are the action inputs (`body`, `commit-parsers`, etc.) documented? Can they figure out how to override defaults?
+5. **GitHub settings** — Check that the repository settings listed in the README are still what the workflows assume (squash merge only, with "Pull request title and description" as the default commit message).
 
-5. **Pitfalls review** — Check each pitfall for relevance. Flag any that are outdated or no longer applicable. Note any new pitfalls discovered during the review.
+6. **Marketplace actions** — Verify the "Marketplace actions" section lists the composite actions the workflows actually use and that the marketplace links resolve.
 
-6. **Report** — Summarize findings before making changes: broken links, stale references, persona gaps, pitfall status.
+7. **Persona review** — Read the README as someone copying this reference setup into their own repository: can they understand the two-tag flow, add the workflows, and configure the repository settings from the README alone? Identify gaps.
 
-7. **Apply fixes** — Update README.md to address all findings. Follow the README rules in CLAUDE.md.
+8. **Report** — Summarize findings before making changes: broken links, stale table rows, mismatches with workflow files, persona gaps.
+
+9. **Apply fixes** — Update README.md to address all findings. Follow the README rules in CLAUDE.md.
