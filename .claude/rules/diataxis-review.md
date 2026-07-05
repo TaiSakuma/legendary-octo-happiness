@@ -16,10 +16,11 @@ in a section's heading.
 ## Rules
 
 - Every section belongs to exactly one quadrant, **declared by the visible
-  marker in its heading** (legend above; the README explains the markers to
-  its readers in one line). A heading whose subsections span quadrants is a
-  **container**: it carries no marker and at most one orientation sentence
-  of its own, and each subsection declares its own quadrant.
+  marker in its heading** (legend above; the markers are deliberately not
+  explained in the README itself). A heading whose subsections span
+  quadrants is a **container**: it carries no marker and at most one
+  orientation sentence of its own, and each subsection declares its own
+  quadrant.
 - Merging is a same-quadrant operation: the merged section carries exactly
   one declaration, so sections of different quadrants cannot merge —
   imported cross-quadrant content would be bleed by construction. Related
