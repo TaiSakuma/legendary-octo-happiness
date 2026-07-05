@@ -20,7 +20,12 @@
 A reference implementation for automated changelog and release workflows using
 Conventional Commits.
 
-## Features
+_Heading markers show each section's [Diátaxis] quadrant: 🎓 tutorial,
+🔧 how-to, 📋 reference, 📖 explanation._
+
+[Diátaxis]: https://diataxis.fr/
+
+## 📖 Features
 
 - PR title prefixes (e.g., `feat:`, `fix:`) enforced with [Conventional Commits]
 - Breaking changes marked with `!` (e.g., `feat!:`)
@@ -41,7 +46,7 @@ Conventional Commits.
 \* _In this repo, `hatch version <rule>` bumps the version and creates the `u`
 tag._
 
-## GitHub Actions workflows
+## 📋 GitHub Actions workflows
 
 The following workflows run on GitHub Actions:
 
@@ -67,7 +72,7 @@ These workflows require the GitHub settings:
     - Default commit message: "Pull request title and description"
   - **Disable** "Allow rebase merges"
 
-## Marketplace actions
+## 📋 Marketplace actions
 
 The workflows use two composite actions developed for this project:
 
