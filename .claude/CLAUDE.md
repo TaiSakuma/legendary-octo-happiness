@@ -19,7 +19,7 @@ PR titles must follow [Conventional Commits](https://www.conventionalcommits.org
 
 ## README
 
-Use `/review-readme` to audit and update. Key rules: links must resolve, and the workflows table must match the actual workflow files and their triggers.
+Use `/review-readme` to audit and update, and `/write-readme` to author or substantially revise the README. Key rules: links must resolve, the workflows table must match the actual workflow files and their triggers, each section keeps to its declared Diátaxis quadrant (`.claude/rules/diataxis-review.md`), and prose follows `.claude/rules/docs-voice.md`.
 
 ## Releases
 
