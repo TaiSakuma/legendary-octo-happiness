@@ -23,8 +23,8 @@ Use `/review-readme` to audit and update, and `/write-readme` to author or subst
 
 ## Releases
 
-Releases use a two-tag flow:
+Releases use a two-tag flow. A release can be cut from any commit that already carries the workflow files, not only `main`'s head:
 
-1. Bump version with `hatch version <rule>`, commit, tag `u<version>`, push.
-2. The Changelog workflow (triggered by the `u` tag) generates `CHANGELOG.md`, commits it, creates the `v` tag, and pushes.
-3. The Release workflow (triggered via `workflow_run` after Changelog) creates a GitHub Release with GitHub auto-generated notes.
+1. Check out the commit to release, bump the version with `hatch version <rule>` (this commits and creates the annotated `u<version>` tag), and push only that tag (`git push origin u<version>`).
+2. The Changelog workflow (triggered by the `u` tag) creates a `release/<version>` branch at the tagged commit, generates `CHANGELOG.md` and the `v` tag on it, then merges the branch back into `main` when the release is on `main`'s line and its history already contains the newest existing release. Otherwise it is a backport: the merge-back is skipped with a warning, the branch is kept, and `main` is untouched.
+3. The Release workflow (triggered via `workflow_run` after Changelog) creates a GitHub Release with GitHub auto-generated notes, marking it latest and moving the `latest` tag only when it is the newest version.
