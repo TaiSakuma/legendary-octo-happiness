@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 
 
+## [0.6.0] - 2026-07-06
+
+### Features
+
+- Release from an old commit ([#38](https://github.com/TaiSakuma/legendary-octo-happiness/pull/38))
+
+### Documentation
+
+- Update review-readme command to match current README ([#30](https://github.com/TaiSakuma/legendary-octo-happiness/pull/30))
+- Include synchronize trigger in workflows table ([#33](https://github.com/TaiSakuma/legendary-octo-happiness/pull/33))
+- Fix README accuracy found by the persona review panel ([#35](https://github.com/TaiSakuma/legendary-octo-happiness/pull/35))
+- Rewrite README with setup guide and verified release runbook ([#36](https://github.com/TaiSakuma/legendary-octo-happiness/pull/36))
+
+### Build & CI
+
+- Add CI workflow with build and type check ([#31](https://github.com/TaiSakuma/legendary-octo-happiness/pull/31))
+- Pin GitHub Actions to commit SHAs ([#32](https://github.com/TaiSakuma/legendary-octo-happiness/pull/32))
+- Fill in package description and add project URLs ([#29](https://github.com/TaiSakuma/legendary-octo-happiness/pull/29))
+- Add persona-review skills and Diátaxis rules for README work ([#34](https://github.com/TaiSakuma/legendary-octo-happiness/pull/34))
+
+
 ## [0.5.1] - 2026-04-26
 
 ### Documentation
