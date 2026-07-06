@@ -53,12 +53,16 @@ Releases use a two-tag flow. The `u` tag triggers changelog generation, which in
 
    Where `<rule>` is `patch`, `minor`, or `major`. This updates `src/legendary_octo_happiness/__about__.py`, creates a commit, and tags it `u<version>`.
 
-2. **Push the commit and tag:**
+2. **Push the tag:**
 
    ```bash
-   git push origin main --tags
+   git push origin u<version>
    ```
 
+   Push only the `u` tag, not `main --tags`: a stale local `latest` tag makes `--tags` fail. GitHub Actions publishes the changelog commit and the other tags back to you.
+
 3. **Wait for CI:**
-   - The **Changelog** workflow generates `CHANGELOG.md`, commits it to `main`, and creates the `v` tag.
-   - The **Release** workflow then creates a GitHub Release with categorized notes.
+   - The **Changelog** workflow creates a `release/<version>` branch at the tagged commit, generates `CHANGELOG.md` and the `v` tag on it, then merges the branch back into `main` (a backport, cut from a commit off `main`'s line, keeps the branch and leaves `main` untouched).
+   - The **Release** workflow then creates a GitHub Release with categorized notes, marking it latest only when it is the newest version.
+
+To release from an older commit rather than `main`'s head, check that commit out first (`git switch --detach <commit>`); see the README's "Release process" for the full runbook.
