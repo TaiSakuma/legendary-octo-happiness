@@ -28,6 +28,7 @@ using Conventional Commits.
 - PR labels assigned automatically based on the prefix
 - GitHub Releases published automatically after a `u`-prefixed version tag
   is pushed
+- Releases cut from any chosen commit, not only `main`'s head
 - Release notes and `CHANGELOG.md` generated from PR titles
 - A rolling `latest` tag that always points at the newest release
 
@@ -102,7 +103,10 @@ this repository does.
 4. Optional: User requires the "Conventional Commits" status check through
    a branch ruleset — by default it reports a status that nothing
    enforces. Any rule must still allow the pipeline's direct pushes to
-   `main` (the changelog commit), or releases will fail.
+   `main` (the merge-back that lands eligible releases on `main`), or
+   releases will fail; a rule requiring linear history would also block
+   the merge-commit case (a release cut from an older commit already on
+   `main`).
 
 [CONTRIBUTING.md]: CONTRIBUTING.md
 
@@ -112,36 +116,64 @@ How a release is cut, and the design behind it.
 
 ### 🔧 Cut a release
 
-1. User bumps the version: `hatch version <rule>`, where `<rule>` is
+1. User checks out the commit to release: `git switch main && git pull`
+   for the newest state, or `git switch --detach <commit>` (e.g.,
+   `git switch --detach 1a2b3c4`) for an older one. The chosen commit
+   must already contain the pipeline's workflow files — a tag push runs
+   the workflow files as of the tagged commit.
+2. User bumps the version: `hatch version <rule>`, where `<rule>` is
    `patch`, `minor`, or `major` (e.g., `hatch version minor`). This
    updates `src/legendary_octo_happiness/__about__.py`, creates the bump
    commit, and tags it `u<version>` (e.g., `u1.2.3`).
-2. User pushes the commit and the tag created in step 1:
-   `git push origin main u1.2.3`.
-3. GitHub Actions ("Generate changelog") commits the updated
-   `CHANGELOG.md` to `main` and tags that commit `v<version>` (e.g.,
-   `v1.2.3`).
-4. GitHub Actions ("Release a new version") creates a GitHub Release from
-   the `v` tag and moves the `latest` tag to it.
-5. User confirms the new version on the [Releases page][release-url]; the
-   release badge above updates as well.
-6. User pulls the changelog commit and the new tags:
+3. User pushes only the tag, reading its name from hatch's output or
+   `git tag`: `git push origin u1.2.3`. (From `main`, pushing the branch
+   and the tag together — `git push origin main u1.2.3` — behaves the
+   same.)
+4. GitHub Actions ("Generate changelog") creates the branch
+   `release/<version>` (e.g., `release/1.2.3`) at the tagged commit,
+   commits the updated `CHANGELOG.md` on it, and tags that commit
+   `v<version>` (e.g., `v1.2.3`).
+5. GitHub Actions ("Generate changelog") merges the release branch into
+   `main` and deletes it — a fast-forward when cut from `main`'s head, a
+   merge commit otherwise — provided the chosen commit is on `main` and
+   the newest existing release by version order is already part of its
+   history; otherwise the release is a backport: GitHub Actions flags the
+   run with a warning, the branch remains as the maintenance line, and
+   `main` is untouched.
+6. GitHub Actions ("Release a new version") creates a GitHub Release from
+   the `v` tag; when the new version is the newest by version order, the
+   release is marked as the latest release and the `latest` tag moves to
+   it.
+7. User confirms the new version on the [Releases page][releases]; when
+   the release is marked as the latest release, the GitHub Release badge
+   above updates as well.
+8. User checks the repository's branches: a `release/<version>` branch
+   remains until its release merges into `main`; once merged, it is
+   deleted. After a merge-back, User returns to `main` if needed
+   (`git switch main`) and pulls the changelog commit and the new tags:
    `git pull --tags --force origin main` (`--force` lets the moved
-   `latest` tag update; without it the fetch is rejected).
+   `latest` tag update; without it the fetch is rejected). Otherwise,
+   `main` has nothing new; `git fetch --tags --force origin` retrieves
+   the release branch and the tags.
 
-The two automated steps appear as workflow runs on the Actions tab; the
+The automated steps appear as workflow runs on the Actions tab; the
 Changelog and Release badges above link to each workflow's runs.
 
 If the "Generate changelog" run fails, a "Release a new version" run
-still appears, but its job is skipped and no release is created. The
-common signature, "Tag u1.2.3 is not on main" in the log, means the bump
-commit did not reach `main` — git pushes the branch and the tag
-independently, so step 2 can land the tag while the `main` push is
-rejected. The failure happens before the pipeline pushes anything, so
-recovery is safe: User pushes the bump commit (`git push origin main`),
-then re-triggers the pipeline by deleting the trigger tag on GitHub
-(`git push origin --delete u1.2.3`) and pushing it again
-(`git push origin u1.2.3`).
+still appears, but its job is skipped and no release is created. User
+deletes the trigger tag on GitHub (`git push origin --delete u1.2.3`),
+deletes the `release/1.2.3` branch if the failed run left one behind
+(`git push origin --delete release/1.2.3`), and, if the failed run had
+already created the `v` tag (visible under the repository's tags),
+deletes that tag too (`git push origin --delete v1.2.3`); then User fixes
+the cause and pushes the trigger tag again (`git push origin u1.2.3`).
+
+If the chosen commit predates the pipeline (the step 1 prerequisite),
+pushing the tag starts no workflow run at all — nothing appears on the
+Actions tab. User confirms the commit carries the workflow files, then
+bumps and tags again from a commit that does.
+
+[releases]: https://github.com/TaiSakuma/legendary-octo-happiness/releases
 
 ### 📖 Why the pipeline is built this way
 
@@ -161,17 +193,129 @@ then re-triggers the pipeline by deleting the trigger tag on GitHub
 - **One release at a time.** The pipeline assumes one release in progress
   at a time; the next `u` tag is pushed only after the previous release
   has appeared.
-- **Releases are cut on `main`.** The changelog step fails unless the
-  `u`-tagged commit is on `main`, and the changelog commit — and with it
-  the `v` tag and the release — is created on `main`'s tip at run time: a
-  PR squash-merged after the `u` tag is pushed is included in the release
-  and its changelog. The step pushes directly to `main`, so
-  branch-protection rules that block direct pushes would break it.
-- **Permanent and rolling tags.** `v` tags are permanent; `latest` moves
-  to every new release commit so links and install instructions can
-  reference one stable name.
+- **Every release gets its own branch.** When the `u` tag is pushed,
+  GitHub Actions creates `release/<version>` at the tagged commit and
+  builds the release there: the changelog commit and the `v` tag sit
+  directly on top of the tagged commit. A release therefore contains
+  exactly the commit that was tagged plus the changelog commit — a PR
+  merged after the tag push is not included; it reaches the release line
+  through `main` and the next release.
+- **`main` follows through the merge-back.** GitHub Actions merges the
+  release branch into `main` and deletes it, provided the chosen commit
+  is on `main` and the newest existing release by version order is
+  already part of its history — a fast-forward when the release was cut
+  from `main`'s head, a merge commit otherwise. The merge-back pushes
+  directly to `main`, so branch-protection rules that block direct
+  pushes would break it.
+- **Backports.** When the merge-back precondition fails — the chosen
+  commit is not on `main`, or the newest existing release by version
+  order is not part of its history — the merge-back is skipped and
+  GitHub Actions flags the run with a warning: `release/<version>`
+  remains as the maintenance line, and `main` (including its
+  `CHANGELOG.md`) is untouched. The next release on that
+  line is cut from the branch's `v`-tagged commit by the same procedure;
+  its changelog lives only on that branch — `main`'s `CHANGELOG.md`
+  never lists backports.
+- **Permanent and rolling tags.** `v` tags are permanent; the GitHub
+  Release is marked as the latest release and the `latest` tag moves only
+  when the new version is the newest by version order.
 
 [git-cliff]: https://git-cliff.org/
+
+### 📖 How a release moves through git
+
+Cutting a release from `main`'s own current head `C` — the simplest
+case:
+
+```text
+---o---o---C                            <- main
+            \
+             u1.2.3---v1.2.3            <- release/1.2.3
+```
+
+```text
+---o---o---C---u1.2.3---v1.2.3          <- main
+```
+
+Since `C` is already `main`'s head, the merge-back is a fast-forward:
+`main` simply extends through the branch's two commits, and
+`release/1.2.3` is deleted with no merge commit.
+
+Cutting from an old commit `C` — one that already has commits after it
+on `main` — needs a real merge instead:
+
+```text
+---o---o---C---o---o                    <- main
+            \
+             u1.3.0---v1.3.0            <- release/1.3.0
+```
+
+```text
+---o---o---C---o---o-------M            <- main
+            \             /
+             u1.3.0---v1.3.0            <- release/1.3.0 (deleted after merge)
+```
+
+A backport looks the same up to the branch, but the merge-back does not
+happen:
+
+```text
+---o---C---o---u1.3.0---v1.3.0---o     <- main
+        \
+         u1.2.4---v1.2.4               <- release/1.2.4 (kept, unmerged)
+```
+
+1.2.4 is cut from `C`, but 1.3.0 already landed after `C` — the newest
+release (`v1.3.0`) is not an ancestor of `C`, so the merge-back is
+skipped. `release/1.2.4` stays as the 1.2.x maintenance line.
+
+The next 1.2.x release branches off `v1.2.4`'s commit as its own new
+branch, not a continuation of the old one:
+
+```text
+---o---C---o---u1.3.0---v1.3.0---o     <- main
+        \
+         u1.2.4---v1.2.4               <- release/1.2.4 (kept)
+                       |
+                       +---u1.2.5---v1.2.5   <- release/1.2.5 (new branch)
+```
+
+`release/1.2.5` forks from `release/1.2.4`'s tip; `release/1.2.4` itself
+is untouched. `release/1.2.5` is cut from a commit that is not on `main`
+either, so it is itself a backport — its own merge-back is skipped by
+the same rule, for the same reason.
+
+Two releases cut from the same commit `C` around the same time (`1.3.0`
+a minor bump, `2.0.0` a major bump — both reachable from the same
+starting version, unlike two minor bumps would be):
+
+```text
+             +---u1.3.0---v1.3.0     <- release/1.3.0
+            /
+---o---o---C                          <- main
+            \
+             +---u2.0.0---v2.0.0     <- release/2.0.0
+```
+
+Both branches are created and both build validly. Whichever merge-back
+completes first — say 1.3.0 — advances `main` past `C`:
+
+```text
+---o---o---C---u1.3.0---v1.3.0        <- main (1.3.0 merged first)
+            \
+             +---u2.0.0---v2.0.0     <- release/2.0.0 (unmerged)
+```
+
+2.0.0's precondition is now checked against this new state: is the
+newest release (`v1.3.0`, which just landed) an ancestor of `C` — that
+is, already part of `C`'s history? No — so 2.0.0's merge-back is skipped
+and flagged with a warning, exactly like a backport, even though it was
+an ordinary release. This is why the pipeline assumes one release in
+progress at a time: releasing 2.0.0 only after 1.3.0 has appeared means
+its checkout starts from the already-advanced `main`, not the stale `C`.
+2.0.0 is still the newest release by version order, so it is marked
+latest regardless — leaving `latest` on a commit `main` never absorbs,
+until someone resolves the situation manually.
 
 ## 📋 GitHub Actions workflows
 
@@ -182,7 +326,7 @@ The following workflows run on GitHub Actions:
 | [`ci.yml`]                 | PR, push to `main`                   | Build sdist and wheel, import from the wheel, type-check with mypy |
 | [`pr-title.yml`]           | PR `opened`/`edited`/`synchronize`   | Validate the PR title against Conventional Commits                 |
 | [`conventional-label.yml`] | PR `opened`/`edited`                 | Label the PR from its title prefix                                 |
-| [`changelog.yml`]          | `u*.*.*` tag pushed (e.g., `u1.2.3`) | Generate `CHANGELOG.md`, create the `v` tag                        |
+| [`changelog.yml`]          | `u*.*.*` tag pushed (e.g., `u1.2.3`) | Generate `CHANGELOG.md`, create the `v` tag, merge back to `main`  |
 | [`release.yml`]            | "Generate changelog" completed       | Create the GitHub Release, move `latest`                           |
 
 [`ci.yml`]: .github/workflows/ci.yml
