@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 
 
+## [0.6.1] - 2026-07-06
+
+### Documentation
+
+- Align CONTRIBUTING and CLAUDE with the release-branch model ([#39](https://github.com/TaiSakuma/legendary-octo-happiness/pull/39))
+
+
 ## [0.6.0] - 2026-07-06
 
 ### Features
