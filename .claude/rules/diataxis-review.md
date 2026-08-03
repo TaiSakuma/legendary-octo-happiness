@@ -23,23 +23,23 @@ in a section's heading.
   quadrant.
 - Merging is a same-quadrant operation: the merged section carries exactly
   one declaration, so sections of different quadrants cannot merge —
-  imported cross-quadrant content would be bleed by construction. Related
-  sections of different quadrants are **grouped** instead, as subsections
-  under a container heading, each keeping its own declaration.
+  imported cross-quadrant content would be out of quadrant by construction.
+  Related sections of different quadrants are **grouped** instead, as
+  subsections under a container heading, each keeping its own declaration.
 - Splitting is likewise same-quadrant: the products of a split inherit the
   original section's declaration. A split never assigns new quadrants —
-  content that belongs in another quadrant leaves through bleed relocation
+  content that belongs in another quadrant leaves through relocation
   (possibly into a section newly added in that quadrant), and what remains
   keeps its declaration. An outcome that spans quadrants is a net result of
   relocation plus add, not a single split. Bringing a legacy mixed section
   under these rules (assigning its target structure) is a scoping decision,
   like reclassification.
 - Content sitting in a section whose quadrant it does not match is
-  **bleed**: relocate it to the section that owns that quadrant; do not
-  polish it in place. A `write-readme` run relocates bleed itself, creating
-  or removing sections as the content requires; the `review-readme` audit
-  routes such findings to `write-readme` instead of restructuring during a
-  patch pass.
+  **out-of-quadrant content**: relocate it to the section that owns that
+  quadrant; do not polish it in place. A `write-readme` run relocates
+  out-of-quadrant content itself, creating or removing sections as the
+  content requires; the `review-readme` audit routes such findings to
+  `write-readme` instead of restructuring during a patch pass.
 - A reviewer ask that would pull a section toward a quadrant it does not
   target is **out of scope** for that section: route it to the owning
   section, never report it as a defect.
@@ -50,7 +50,7 @@ in a section's heading.
   decision made when a run is scoped or by the user, not a review outcome.
 - Reviewer self-check, before reporting: answer the declared quadrant's
   reader question; list the asks you routed as out of scope and where they
-  went; flag any bleed you found on each section.
+  went; flag any out-of-quadrant content you found on each section.
 
 ## Markers as the declaration record
 

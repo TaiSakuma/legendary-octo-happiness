@@ -62,15 +62,16 @@ today's workflow files — a mismatch with the brief is a defect; a mismatch
 with current behavior is not. Before reporting, run the rule's self-check:
 an ask that would pull a section toward another quadrant belongs to the
 owning section — report it as a relocation, and report content sitting in
-the wrong section as bleed; never report either as a defect of the section
-it sits in. Structural recommendations — a section to add, split, merge, or
-remove — are legitimate feedback; report them explicitly as structural. The
-declared quadrant itself is fixed for your review: judge the content against
-it, never the declaration against the content. Recommend merging or removing
-a section only from the position of its audience — even for its own readers
-it duplicates another section, has no purpose left once bleed is relocated,
-or documents something that no longer exists — never because it is not for
-you: "not for me" is a relevance report, not a removal case.
+the wrong section as out-of-quadrant content; never report either as a
+defect of the section it sits in. Structural recommendations — a section to
+add, split, merge, or remove — are legitimate feedback; report them
+explicitly as structural. The declared quadrant itself is fixed for your
+review: judge the content against it, never the declaration against the
+content. Recommend merging or removing a section only from the position of
+its audience — even for its own readers it duplicates another section, has
+no purpose left once out-of-quadrant content is relocated, or documents
+something that no longer exists — never because it is not for you: "not for
+me" is a relevance report, not a removal case.
 
 **When the section is not for you.** Not every section serves your persona;
 the README as a whole does. When your relevance is low, report it as such
