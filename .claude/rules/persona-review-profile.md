@@ -17,18 +17,17 @@ grows page by page; here it is the whole document.
 
 ## Personas
 
-The five review personas are the `readme-persona-*` subagents in
-`.claude/agents/`: `adopter`, `release-operator`, `ci-expert`,
-`evaluator`, and `ai`. The primary personas are chosen when the run is
-scoped (step 1).
+The five review personas are the persona head files in `.claude/personas/`:
+`adopter.md`, `release-operator.md`, `ci-expert.md`, `evaluator.md`, and
+`ai.md`. The primary personas are chosen when the run is scoped (step 1).
 
 ## Declaration mechanism
 
 Each section's Diátaxis quadrant is declared by the visible marker in its
 heading, as `.claude/rules/diataxis-declaration.md` specifies (marker legend,
-section shapes, record). The Diátaxis rules are
-`.claude/rules/diataxis-review.md`, the shared review core: the reader
-questions, the per-quadrant guidance, the restructuring rules, and the
+section shapes, record). The Diátaxis rules are the shared review core in the
+`persona-review` skill (`references/diataxis-review.md` in its directory): the
+reader questions, the per-quadrant guidance, the restructuring rules, and the
 reviewers' self-check.
 
 Declarations travel with the text: each draft and the shipped README declare
@@ -66,11 +65,11 @@ binds the implementation that follows.
 
 ## Verification
 
-No one-time wiring. Checks, re-run each review round: the `/review-readme`
-audit — local links resolve, and the workflows table matches the actual
-workflow files and their triggers — and the voice check against
-`.claude/rules/docs-voice.md` (MD040 fences, aligned tables, ~80-column
-wrap, reference-style links, examples alongside patterns).
+No one-time wiring. Checks, re-run each review round: local links resolve;
+the workflows table matches the actual workflow files and their triggers;
+and the voice check against `.claude/rules/docs-voice.md` (MD040 fences,
+aligned tables, ~80-column wrap, reference-style links, examples alongside
+patterns).
 
 ## Record
 
@@ -96,5 +95,5 @@ themselves the declaration record; there is no table to sync.
   section of another quadrant may look split across quadrants; in both
   cases the net result is composed of relocation plus add or remove — no
   declaration moved and no single step crossed a quadrant.
-- Keep `/review-readme` as the maintenance audit; this skill is for
-  authoring and substantial revision.
+- Keep `/review-readme` as the single-round panel review (report only); this
+  skill is for authoring and substantial revision.
