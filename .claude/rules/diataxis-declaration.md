@@ -2,9 +2,9 @@
 
 How units of content declare their Diátaxis quadrants in `README.md`, the
 repository's document. The review rules that use these declarations are in
-`.claude/rules/diataxis-review.md` (the shared core); this file supplies the
-marker legend, the section shapes, and the declaration record the core defers
-to.
+the `persona-review` skill's `references/diataxis-review.md` (the shared
+core); this file supplies the marker legend, the section shapes, and the
+declaration record the core defers to.
 
 ## Markers
 
@@ -47,7 +47,8 @@ with the text under review, and the review brief carries each section's
 status and the reader questions.
 
 A `write-readme` run relocates out-of-quadrant content itself, creating or
-removing sections as the content requires. The `review-readme` audit flags
-unmarked non-container sections, markers outside the legend, and content that
-does not match its marker, and routes sections needing substantial rework to
-`write-readme` instead of restructuring during a patch pass.
+removing sections as the content requires. A `review-readme` run reviews the
+shipped README once through the same panel: the reviewers' declaration pass
+flags unmarked non-container sections, markers outside the legend, and content
+that does not match its marker, and the report routes sections needing rework
+to `write-readme` — a review run never edits the README.
