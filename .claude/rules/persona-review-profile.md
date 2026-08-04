@@ -23,17 +23,18 @@ scoped (step 1).
 ## Declaration mechanism
 
 Each section's Diátaxis quadrant is declared by the visible marker in its
-heading. The Diátaxis rules are `.claude/rules/diataxis-review.md`, which
-holds the marker legend, the one-quadrant-per-section rule, and the
-relocation rules for out-of-quadrant content. Every section belongs to
-exactly one quadrant; there are no sanctioned multi-quadrant sections — a
-heading whose subsections span quadrants is an unmarked container with at
-most an orientation sentence of its own. Declarations travel with the text:
-each draft and the shipped README declare their own structure through their
-heading markers, and the review brief carries each section's status and
-reader question, not its quadrant. Out-of-scope asks and out-of-quadrant
-content are routed to the owning section within the README, creating or
-removing sections as the content requires.
+heading, as `.claude/rules/diataxis-declaration.md` specifies (marker legend,
+section shapes, record). The Diátaxis rules are
+`.claude/rules/diataxis-review.md`, the shared review core: the reader
+questions, the per-quadrant guidance, the restructuring rules, and the
+reviewers' self-check.
+
+Declarations travel with the text: each draft and the shipped README declare
+their own structure through their heading markers, and the review brief
+carries each section's status and reader question, not its quadrant.
+Out-of-scope asks and out-of-quadrant content are routed to the owning
+section within the README, creating or removing sections as the content
+requires.
 
 ## Premise to pin
 

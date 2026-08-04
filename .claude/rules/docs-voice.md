@@ -49,7 +49,7 @@ and pull-request text.
 - Steps in how-to sections name their actor ("User ...", "GitHub Actions
   ...").
 - Section headings carry their Diátaxis quadrant marker (legend in
-  `.claude/rules/diataxis-review.md`); container headings and document
+  `.claude/rules/diataxis-declaration.md`); container headings and document
   front matter carry none.
 
 ## During persona review

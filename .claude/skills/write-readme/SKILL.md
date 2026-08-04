@@ -84,8 +84,8 @@ in the repository).
    flagged); and a one-line ship/revise verdict (with the single most important
    change if revising). Consolidate into a matrix. If a reviewer errors out
    mid-run, re-launch it — do not treat a missing verdict as a pass. This pass
-   validates lens-relevance and accuracy, not framing or altitude; the
-   re-review step below covers that.
+   validates lens-relevance and accuracy, not framing or altitude; the re-review
+   step below covers that.
 
 6. **Fact-check** — Verify every claim and code example against the targets in
    the profile's Fact-check targets section, applying its checking notes. When
@@ -104,8 +104,8 @@ in the repository).
    Apply cross-cutting fixes and write the final text yourself, following the
    voice rules — persona-suggested wording is advisory. An ask a persona flagged
    out of scope, and any content flagged as out of quadrant, is routed to the
-   destination named in the profile's Declaration mechanism section — not
-   folded in where it does not belong.
+   destination named in the profile's Declaration mechanism section — not folded
+   in where it does not belong.
 
 8. **Re-review the resulting document** — The draft review (step 5) does not
    cover the text you will ship: a merge can inherit a weakness shared by all
