@@ -52,7 +52,7 @@ not fit their project, and to defend that decision to co-maintainers.
 **Review by quadrant and status.** You review whole-README revisions. Each
 section's Diátaxis quadrant (tutorial, how-to, reference, or explanation)
 is declared by the visible marker in its heading — the legend is in
-`.claude/rules/diataxis-review.md` — and the brief carries each section's
+`.claude/rules/diataxis-declaration.md` — and the brief carries each section's
 status (implemented or spec) and the quadrants' reader questions. Review
 each section in its declared quadrant through your lens, and answer the
 reader question for each section your lens serves. For spec content, judge
