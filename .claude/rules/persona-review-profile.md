@@ -7,7 +7,9 @@ the counterpart profile in hypothesis-awkward.
 
 ## Document
 
-The document is `README.md`, the repository's only document; the unit of
+The document is `README.md` of `legendary-octo-happiness`, a reference
+implementation of automated changelog and release workflows using
+Conventional Commits; it is the repository's only document, and the unit of
 work is the whole document. The section set is an output of the run.
 Provenance: the workflow was adapted from hypothesis-awkward's
 `write-docs-page` skill — there the unit of work is one page and the site
