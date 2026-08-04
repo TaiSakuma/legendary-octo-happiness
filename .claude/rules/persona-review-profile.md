@@ -1,9 +1,9 @@
 # Persona-review profile
 
-Repository-specific values for the persona-review engine in
-`.claude/skills/write-readme/SKILL.md`. The engine reads this file first
-and refers to its sections by name; the section structure is shared with
-the counterpart profile in hypothesis-awkward.
+Repository-specific values for the `reviewed-writer` plugin's `write-doc`
+engine, invoked through `.claude/skills/write-readme/SKILL.md`. The engine
+reads this file first and refers to its sections by name; the section
+structure is shared with the counterpart profile in hypothesis-awkward.
 
 ## Document
 
@@ -26,9 +26,9 @@ The five review personas are the persona head files in `.claude/personas/`:
 Each section's Diátaxis quadrant is declared by the visible marker in its
 heading, as `.claude/rules/diataxis-declaration.md` specifies (marker legend,
 section shapes, record). The Diátaxis rules are the shared review core in the
-`persona-review` skill (`references/diataxis-review.md` in its directory): the
-reader questions, the per-quadrant guidance, the restructuring rules, and the
-reviewers' self-check.
+`reviewed-writer` plugin's `persona-review` skill
+(`references/diataxis-review.md` in its directory): the reader questions, the
+per-quadrant guidance, the restructuring rules, and the reviewers' self-check.
 
 Declarations travel with the text: each draft and the shipped README declare
 their own structure through their heading markers, and the review brief

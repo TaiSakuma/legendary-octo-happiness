@@ -19,7 +19,7 @@ PR titles must follow [Conventional Commits](https://www.conventionalcommits.org
 
 ## README
 
-Use `/review-readme` for a single persona-panel review of the shipped README (report only), and `/write-readme` to author or substantially revise it. Key rules: links must resolve, the workflows table must match the actual workflow files and their triggers, each section keeps to its declared Diátaxis quadrant (marker legend in `.claude/rules/diataxis-declaration.md`), and prose follows `.claude/rules/docs-voice.md`.
+Use `/review-readme` for a single persona-panel review of the shipped README (report only), and `/write-readme` to author or substantially revise it. Both delegate to the `reviewed-writer` plugin, pinned in `.claude/settings.json`. Key rules: links must resolve, the workflows table must match the actual workflow files and their triggers, each section keeps to its declared Diátaxis quadrant (marker legend in `.claude/rules/diataxis-declaration.md`), and prose follows `.claude/rules/docs-voice.md`.
 
 ## Releases
 

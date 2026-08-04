@@ -10,7 +10,8 @@ no revision.
 
 ## Steps
 
-1. **Review** — Invoke the `persona-review` skill on `README.md` as it
+1. **Review** — Invoke the `reviewed-writer:persona-review` skill on
+   `README.md` as it
    stands, with its standalone defaults: all five personas, implemented
    status, no rubric.
 
