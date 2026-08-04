@@ -2,9 +2,10 @@
 
 How units of content declare their Diátaxis quadrants in `README.md`, the
 repository's document. The review rules that use these declarations are in
-the `persona-review` skill's `references/diataxis-review.md` (the shared
-core); this file supplies the marker legend, the section shapes, and the
-declaration record the core defers to.
+the `reviewed-writer` plugin's `persona-review` skill
+(`references/diataxis-review.md`, the shared core); this file supplies the
+marker legend, the section shapes, and the declaration record the core
+defers to.
 
 ## Markers
 
